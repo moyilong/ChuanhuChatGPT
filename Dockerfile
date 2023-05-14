@@ -1,7 +1,7 @@
 FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04 as base
 
 RUN apt update && \
-    apt install -y python3 python-is-python3
+    apt install -y python3 python-is-python3 python3-pip
 
 FROM base as build
 
