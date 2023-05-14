@@ -17,5 +17,10 @@ RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src/ --depth 1 && \
 
 FROM base 
 
+WORKDIR /src
+
+RUN pip3 install -r requirements.txt 
+RUN pip3 install -r requirements_advanced.txt 
+
 ENV dockerrun=yes
 CMD ["python3", "-u", "ChuanhuChatbot.py","2>&1", "|", "tee", "/var/log/application.log"]
