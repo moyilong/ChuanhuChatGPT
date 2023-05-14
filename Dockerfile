@@ -1,19 +1,12 @@
 FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04 as base
 
 RUN apt update && \
-    apt install -y python3 python-is-python3 python3-pip
+    apt install -y python3 python-is-python3 python3-pip \
+                    git build-essential cmake
 
-FROM base as build
-
-RUN apt install -y git build-essential
-
-
-WORKDIR /src
 
 RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src --depth 1 && \
     rm -rfv .git
-
-FROM base 
 
 WORKDIR /src
 
