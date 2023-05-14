@@ -17,7 +17,7 @@ FROM base
 
 WORKDIR /src
 
-COPY --from=base /src /src
+COPY --from=build /src /src
 
 RUN pip3 install -r requirements.txt
 RUN pip3 install -r requirements_advanced.txt 
