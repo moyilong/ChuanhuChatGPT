@@ -5,7 +5,7 @@ RUN apt update && \
 
 FROM base as build
 
-RUN apt install git build-essential
+RUN apt install -y git build-essential
 
 
 WORKDIR /src
