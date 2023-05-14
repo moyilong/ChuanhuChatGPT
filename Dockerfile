@@ -13,8 +13,6 @@ WORKDIR /src
 RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src/ --depth 1 && \
     rm -rfv .git
 
-
-
 FROM base 
 
 WORKDIR /src
