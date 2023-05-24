@@ -11,16 +11,17 @@ RUN apt update && \
 
 
 RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src --depth 1 && \
-    rm -rfv .git
+    cd /src && \
+    git submodule update --init -r && \
+    rm -rfv .git && \
+    cat requirements.txt requirements_advanced.txt | sort | grep -vE 'torch' | uniq > requirements-all.txt
 
 WORKDIR /src
 
+
 RUN --mount=type=cache,target=/root/.cache \
+    pip3 install -r requirements-all.txt -i https://pypi.douban.com/simple/ && \
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-RUN --mount=type=cache,target=/root/.cache \
-    pip3 install -r requirements.txt
-RUN --mount=type=cache,target=/root/.cache \
-    pip3 install -r requirements_advanced.txt 
 
 ENV dockerrun=yes
 CMD ["python3", "-u", "ChuanhuChatbot.py","2>&1", "|", "tee", "/var/log/application.log"]
