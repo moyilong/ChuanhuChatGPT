@@ -10,6 +10,7 @@ RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src --depth 1 && \
 
 WORKDIR /src
 
+RUN pip3 install LLaMATokenizer
 RUN pip3 install -r requirements.txt
 RUN pip3 install -r requirements_advanced.txt 
 
