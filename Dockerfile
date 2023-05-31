@@ -1,13 +1,14 @@
 FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04 as base
 
 RUN sed -i \
-        -e 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' \
-        -e 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' \
-        /etc/apt/sources.list
-
+    -e 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' \
+    -e 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' \
+    /etc/apt/sources.list
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
-    apt install -y python3 python-is-python3 python3-pip \
-                    git build-essential cmake
+    apt install -y --fix-missing \
+    python3 python-is-python3 python3-pip \
+    git build-essential cmake texlive-full latex-cjk-all 
 
 
 RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src --depth 1 && \
