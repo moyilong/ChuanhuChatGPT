@@ -4,10 +4,16 @@ RUN sed -i \
     -e 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' \
     -e 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' \
     /etc/apt/sources.list
-ENV DEBIAN_FRONTEND=noninteractive
+    
+# Skip Debian 
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Parallel build 
+ARG MAX_JOBS=32
+
 RUN apt update && \
     apt install -y --fix-missing \
-    python3 python-is-python3 python3-pip \
+    python3 python- is-python3 python3-pip \
     git build-essential cmake texlive-full latex-cjk-all 
 
 
