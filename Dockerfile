@@ -12,22 +12,21 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG MAX_JOBS=32
 
 RUN apt update && \
-    apt install -y --fix-missing \
-    python3 python-is-python3 python3-pip \
-    git build-essential cmake texlive-full latex-cjk-all 
-
+    apt install -y --fix-missing python3 python-is-python3 python3-pip  && \
+    apt install -y --fix-missing git build-essential cmake 
+    # apt install -y --fix-missing texlive-full latex-cjk-all 
 
 RUN git clone https://github.com/GaiZhenbiao/ChuanhuChatGPT /src --depth 1 && \
     cd /src && \
-    git submodule update --init -r && \
-    rm -rfv .git && \
-    cat requirements.txt requirements_advanced.txt | sort | grep -vE 'torch' | uniq > requirements-all.txt
+    git submodule update --init -r
 
 WORKDIR /src
 
-
+# -i https://pypi.douban.com/simple/  
 RUN --mount=type=cache,target=/root/.cache \
-    pip3 install -r requirements-all.txt -i https://pypi.douban.com/simple/ && \
+    pip3 install -U setuptools && \
+    pip3 install -r requirements.txt && \ 
+    pip3 install -r requirements_advanced.txt && \ 
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 ENV dockerrun=yes
